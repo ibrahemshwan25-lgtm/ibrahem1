@@ -1661,47 +1661,5 @@
         const count = document.getElementById("countInput").value;
         const price = document.getElementById("priceInput").value;
 
-        if (!name) {
-            alert("تکایە ناوی کەسەکە بنووسە!");
-            return;
-        }
 
-        try {
-            await addDoc(collection(db, collectionName), {
-                name: name,
-                count: Number(count) || 0,
-                price: Number(price) || 0,
-                createdAt: new Date()
-            });
-
-            document.getElementById("nameInput").value = "";
-            document.getElementById("countInput").value = "";
-            document.getElementById("priceInput").value = "";
-        } catch (e) {
-            console.error("هەڵە لە زیادکردندا: ", e);
-        }
-    });
-
-    onSnapshot(collection(db, collectionName), (snapshot) => {
-        let listHTML = "";
-        
-        if (snapshot.empty) {
-            document.getElementById("personsList").innerHTML = "<p class='text-gray-500'>هیچ تۆمارێک نییە.</p>";
-            return;
-        }
-
-        snapshot.forEach((doc) => {
-            const data = doc.data();
-            listHTML += `
-                <div class="border-b py-2 flex justify-between items-center">
-                    <div>
-                        <p class="font-bold">${data.name || ''}</p>
-                        <p class="text-sm text-gray-600">ژمارەی نەفەر: ${data.count || 0}</p>
-                    </div>
-                    <div class="text-blue-600 font-semibold">${data.price || 0} د.ع</div>
-                </div>
-            `;
-        });
- document.getElementById("personsList").innerHTML = listHTML;
-    });
 </script>
